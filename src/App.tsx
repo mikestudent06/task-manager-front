@@ -1,17 +1,45 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import { LoginPage } from "@/pages/auth/LoginPage";
-import { AppLayout } from "@/components/layout/AppLayout";
-import { DashboardPage } from "@/pages/dashboard/DashboardPage";
-import { TasksPage } from "@/pages/dashboard/TasksPage";
-import { CategoriesPage } from "@/pages/dashboard/CategoriesPage";
+import { PageLoading } from "@/components/common/LoadingState";
 import { ProtectedRoute } from "@/components/common/ProtectedRoute";
+
+// Lazy load pages for better performance
+const LoginPage = React.lazy(() =>
+  import("@/pages/auth/LoginPage").then((m) => ({ default: m.LoginPage }))
+);
+const AppLayout = React.lazy(() =>
+  import("@/components/layout/AppLayout").then((m) => ({
+    default: m.AppLayout,
+  }))
+);
+const DashboardPage = React.lazy(() =>
+  import("@/pages/dashboard/DashboardPage").then((m) => ({
+    default: m.DashboardPage,
+  }))
+);
+const TasksPage = React.lazy(() =>
+  import("@/pages/dashboard/TasksPage").then((m) => ({ default: m.TasksPage }))
+);
+const CategoriesPage = React.lazy(() =>
+  import("@/pages/dashboard/CategoriesPage").then((m) => ({
+    default: m.CategoriesPage,
+  }))
+);
+const ProfilePage = React.lazy(() =>
+  import("@/pages/dashboard/ProfilePage").then((m) => ({
+    default: m.ProfilePage,
+  }))
+);
+const SettingsPage = React.lazy(() =>
+  import("@/pages/dashboard/SettingsPage").then((m) => ({
+    default: m.SettingsPage,
+  }))
+);
 
 function App() {
   const queryClient = useQueryClient();
 
-  // Handle auth logout events from axios interceptor
   React.useEffect(() => {
     const handleAuthLogout = () => {
       queryClient.clear();
@@ -23,31 +51,31 @@ function App() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Routes>
-        {/* Public Auth Routes */}
-        <Route path="/auth/login" element={<LoginPage />} />
+      <Suspense fallback={<PageLoading message="Loading application..." />}>
+        <Routes>
+          {/* Public Auth Routes */}
+          <Route path="/auth/login" element={<LoginPage />} />
 
-        {/* Protected App Routes */}
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <AppLayout />
-            </ProtectedRoute>
-          }
-        >
-          {/* Nested dashboard routes */}
-          <Route index element={<DashboardPage />} />
-          <Route path="tasks" element={<TasksPage />} />
-          <Route path="categories" element={<CategoriesPage />} />
-        </Route>
+          {/* Protected App Routes */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<DashboardPage />} />
+            <Route path="tasks" element={<TasksPage />} />
+            <Route path="categories" element={<CategoriesPage />} />
+            <Route path="profile" element={<ProfilePage />} />
+            <Route path="settings" element={<SettingsPage />} />
+          </Route>
 
-        {/* Root redirect */}
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
-
-        {/* Catch all */}
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
-      </Routes>
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 }
