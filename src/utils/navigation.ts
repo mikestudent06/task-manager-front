@@ -33,11 +33,6 @@ export const getUserMenuActions = (logout: () => void): UserMenuAction[] => [
     icon: User,
   },
   {
-    label: "Settings",
-    href: "/dashboard/settings",
-    icon: Settings,
-  },
-  {
     label: "Logout",
     onClick: logout,
     icon: LogOut,

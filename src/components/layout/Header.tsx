@@ -36,9 +36,9 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="flex h-16 items-center justify-between px-4">
+      <div className="flex h-14 md:h-16 items-center justify-between px-2 sm:px-4">
         {/* Left side - Mobile menu button */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 md:gap-4">
           <Button
             variant="ghost"
             size="icon"
@@ -48,28 +48,30 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
             <Menu className="h-5 w-5" />
           </Button>
 
-          <div className="hidden md:block">
-            <h1 className="text-xl font-semibold">Task Manager</h1>
+          <div className="flex h-full items-center">
+            <div className="max-w-[240px] sm:max-w-none">
+              <h1 className="text-lg md:text-xl font-semibold truncate">
+                Good {getGreeting()}, {user?.name?.split(" ")[0] || "there"}!
+              </h1>
+              <p className="text-xs md:text-sm text-muted-foreground truncate">
+                {new Date().toLocaleDateString("en-US", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </p>
+            </div>
           </div>
         </div>
 
-        {/* Right side - User menu and notifications */}
-        <div className="flex items-center gap-4">
-          {/* Notifications button (placeholder for now) */}
-          <Button variant="ghost" size="icon" className="relative">
-            <Bell className="h-5 w-5" />
-            {/* Badge for notification count (optional) */}
-            <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-red-500 text-xs text-white flex items-center justify-center">
-              3
-            </span>
-          </Button>
-
+        <div className="flex items-center">
           {/* User dropdown menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="relative h-10 w-10 rounded-full"
+                className="relative h-8 w-8 md:h-10 md:w-10 rounded-full"
               >
                 <UserAvatar user={user} size="sm" />
               </Button>
@@ -105,3 +107,10 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
     </header>
   );
 };
+
+function getGreeting(): string {
+  const hour = new Date().getHours();
+  if (hour < 12) return "morning";
+  if (hour < 17) return "afternoon";
+  return "evening";
+}

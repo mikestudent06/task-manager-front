@@ -1,3 +1,5 @@
+"use client";
+
 import React, { Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
@@ -7,6 +9,24 @@ import { ProtectedRoute } from "@/components/common/ProtectedRoute";
 // Lazy load pages for better performance
 const LoginPage = React.lazy(() =>
   import("@/pages/auth/LoginPage").then((m) => ({ default: m.LoginPage }))
+);
+const RegisterPage = React.lazy(() =>
+  import("@/pages/auth/RegisterPage").then((m) => ({ default: m.RegisterPage }))
+);
+const VerifyOtpPage = React.lazy(() =>
+  import("@/pages/auth/VerifyOtpPage").then((m) => ({
+    default: m.VerifyOtpPage,
+  }))
+);
+const ForgotPasswordPage = React.lazy(() =>
+  import("@/pages/auth/ForgotPasswordPage").then((m) => ({
+    default: m.ForgotPasswordPage,
+  }))
+);
+const ResetPasswordPage = React.lazy(() =>
+  import("@/pages/auth/ResetPasswordPage").then((m) => ({
+    default: m.ResetPasswordPage,
+  }))
 );
 const AppLayout = React.lazy(() =>
   import("@/components/layout/AppLayout").then((m) => ({
@@ -31,11 +51,6 @@ const ProfilePage = React.lazy(() =>
     default: m.ProfilePage,
   }))
 );
-const SettingsPage = React.lazy(() =>
-  import("@/pages/dashboard/SettingsPage").then((m) => ({
-    default: m.SettingsPage,
-  }))
-);
 
 function App() {
   const queryClient = useQueryClient();
@@ -55,6 +70,13 @@ function App() {
         <Routes>
           {/* Public Auth Routes */}
           <Route path="/auth/login" element={<LoginPage />} />
+          <Route path="/auth/register" element={<RegisterPage />} />
+          <Route path="/auth/verify-otp" element={<VerifyOtpPage />} />
+          <Route
+            path="/auth/forgot-password"
+            element={<ForgotPasswordPage />}
+          />
+          <Route path="/auth/reset-password" element={<ResetPasswordPage />} />
 
           {/* Protected App Routes */}
           <Route
@@ -69,7 +91,6 @@ function App() {
             <Route path="tasks" element={<TasksPage />} />
             <Route path="categories" element={<CategoriesPage />} />
             <Route path="profile" element={<ProfilePage />} />
-            <Route path="settings" element={<SettingsPage />} />
           </Route>
 
           <Route path="/" element={<Navigate to="/dashboard" replace />} />

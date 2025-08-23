@@ -9,19 +9,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import type { LoginCredentials } from "@/types/auth.types";
+import type { ForgotPasswordData } from "@/types/auth.types";
 
-const loginSchema = z.object({
+const forgotPasswordSchema = z.object({
   email: z.string().email("Invalid email address"),
-  password: z.string().min(1, "Password is required"),
 });
 
-interface LoginFormProps {
-  onSubmit: (data: LoginCredentials) => void;
+interface ForgotPasswordFormProps {
+  onSubmit: (data: ForgotPasswordData) => void;
   isLoading?: boolean;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({
+export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
   onSubmit,
   isLoading = false,
 }) => {
@@ -29,12 +28,19 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginCredentials>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<ForgotPasswordData>({
+    resolver: zodResolver(forgotPasswordSchema),
   });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div className="text-center mb-4">
+        <p className="text-sm text-muted-foreground">
+          Enter your email address and we'll send you a link to reset your
+          password.
+        </p>
+      </div>
+
       <div className="space-y-2">
         <Label htmlFor="email">Email</Label>
         <Input
@@ -49,44 +55,21 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         )}
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="password">Password</Label>
-        <Input
-          id="password"
-          type="password"
-          placeholder="Enter your password"
-          {...register("password")}
-          className={errors.password ? "border-destructive" : ""}
-        />
-        {errors.password && (
-          <p className="text-sm text-destructive">{errors.password.message}</p>
-        )}
-      </div>
-
       <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading ? "Signing in..." : "Sign In"}
+        {isLoading ? "Sending..." : "Send Reset Link"}
       </Button>
-
-      {/* <div className="text-center">
-        <Link
-          to="/auth/forgot-password"
-          className="text-sm text-primary hover:underline"
-        >
-          Forgot your password?
-        </Link>
-      </div> */}
 
       <Separator />
 
       <div className="text-center">
         <span className="text-sm text-muted-foreground">
-          Don't have an account?{" "}
+          Remember your password?{" "}
         </span>
         <Link
-          to="/auth/register"
+          to="/auth/login"
           className="text-sm text-primary hover:underline font-medium"
         >
-          Sign up
+          Sign in
         </Link>
       </div>
     </form>

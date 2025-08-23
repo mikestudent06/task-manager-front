@@ -15,7 +15,7 @@ export enum Priority {
 export interface Category {
   id: string;
   name: string;
-  color: string;MEDIUM
+  color: string 
   taskCount: number;
   createdAt: Date;
   updatedAt: Date;
