@@ -8,13 +8,16 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { User } from "@/types/auth.types";
 import type { UpdateProfileData } from "@/types/user.types";
+import toast from "react-hot-toast";
 
+// Update schema to match UpdateProfileData type (optional fields)
 const profileSchema = z.object({
   name: z
     .string()
     .min(2, "Name must be at least 2 characters")
-    .max(50, "Name must be less than 50 characters"),
-  email: z.string().email({ message: "Invalid email address" }),
+    .max(50, "Name must be less than 50 characters")
+    .optional(),
+  email: z.string().email({ message: "Invalid email address" }).optional(),
 });
 
 interface ProfileFormProps {
@@ -42,6 +45,16 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({
   });
 
   const handleFormSubmit = (data: UpdateProfileData) => {
+    // Validate required fields manually since schema allows optional
+    if (!data.name?.trim()) {
+      toast.error("Name is required");
+      return;
+    }
+    if (!data.email?.trim()) {
+      toast.error("Email is required");
+      return;
+    }
+
     // Only send changed fields
     const changes: UpdateProfileData = {};
     if (data.name !== user.name) changes.name = data.name;

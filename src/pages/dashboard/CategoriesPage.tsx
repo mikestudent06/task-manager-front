@@ -25,8 +25,10 @@ export const CategoriesPage: React.FC = () => {
     isDeletingCategory,
   } = useCategories();
 
-  const handleCreateCategory = (data: CreateCategoryData) => {
-    createCategory(data);
+  const handleCreateCategory = (
+    data: CreateCategoryData | UpdateCategoryData
+  ) => {
+    createCategory(data as CreateCategoryData);
     setShowCreateForm(false); // Hide form after successful creation
   };
 
@@ -34,7 +36,7 @@ export const CategoriesPage: React.FC = () => {
     categoryId: string,
     data: UpdateCategoryData
   ) => {
-    updateCategory(categoryId, data);
+    updateCategory(categoryId, data as UpdateCategoryData);
   };
 
   const handleDeleteCategory = (categoryId: string) => {

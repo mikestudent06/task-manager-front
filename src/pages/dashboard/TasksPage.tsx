@@ -24,6 +24,7 @@ import {
   type UpdateTaskData,
 } from "@/types/task.types";
 import { TaskForm } from "@/components/forms/TaskForm";
+import toast from "react-hot-toast";
 
 export const TasksPage: React.FC = () => {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
@@ -52,8 +53,18 @@ export const TasksPage: React.FC = () => {
 
   const { categories, isCategoriesLoading } = useCategories();
 
-  const handleCreateTask = (data: CreateTaskData) => {
-    createTask(data);
+  // const handleCreateTask = (data: CreateTaskData) => {
+  //   createTask(data);
+  //   setShowCreateDialog(false);
+  // };
+  const handleCreateTask = (data: CreateTaskData | UpdateTaskData) => {
+    // Validate required fields for create mode
+    if (!data.title?.trim()) {
+      toast.error("Task title is required");
+      return;
+    }
+
+    createTask(data as CreateTaskData);
     setShowCreateDialog(false);
   };
 
