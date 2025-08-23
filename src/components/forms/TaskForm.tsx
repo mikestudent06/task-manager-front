@@ -20,12 +20,10 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, X, ChevronLeft, ChevronRight } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import type {
-  Task,
-  CreateTaskData,
-  UpdateTaskData,
+import {
+  type Task,
+  type CreateTaskData,
+  type UpdateTaskData,
   Priority,
 } from "@/types/task.types";
 import { DatePicker } from "../common/DatePicker";
@@ -39,20 +37,14 @@ const taskSchema = z.object({
     .trim(),
   description: z
     .string()
-    .max(1000, "Description must be less than 1000 characters")
+    .max(500, "Description must be less than 500 characters")
     .optional(),
-  priority: z.enum(["LOW", "MEDIUM", "HIGH", "URGENT"]).default("MEDIUM"),
+  priority: z.nativeEnum(Priority),
   dueDate: z.string().optional(),
   categoryId: z.string().optional(),
 });
 
-type TaskFormData = {
-  title: string;
-  description?: string;
-  priority: Priority;
-  dueDate?: string;
-  categoryId?: string;
-};
+type TaskFormData = z.infer<typeof taskSchema>;
 
 interface TaskFormProps {
   task?: Task; // If provided, it's edit mode
@@ -63,10 +55,26 @@ interface TaskFormProps {
 }
 
 const PRIORITY_CONFIG = {
-  LOW: { label: "Low", color: "bg-gray-100 text-gray-800", icon: "🟢" },
-  MEDIUM: { label: "Medium", color: "bg-blue-100 text-blue-800", icon: "🔵" },
-  HIGH: { label: "High", color: "bg-orange-100 text-orange-800", icon: "🟡" },
-  URGENT: { label: "Urgent", color: "bg-red-100 text-red-800", icon: "🔴" },
+  [Priority.LOW]: {
+    label: "Low",
+    color: "bg-gray-500",
+    icon: "🟢",
+  },
+  [Priority.MEDIUM]: {
+    label: "Medium",
+    color: "bg-blue-500",
+    icon: "🔵",
+  },
+  [Priority.HIGH]: {
+    label: "High",
+    color: "bg-orange-500",
+    icon: "🟡",
+  },
+  [Priority.URGENT]: {
+    label: "Urgent",
+    color: "bg-red-500",
+    icon: "🔴",
+  },
 };
 
 export const TaskForm: React.FC<TaskFormProps> = ({
@@ -89,13 +97,13 @@ export const TaskForm: React.FC<TaskFormProps> = ({
   } = useForm<TaskFormData>({
     resolver: zodResolver(taskSchema),
     defaultValues: {
-      title: task?.title || "",
-      description: task?.description || "",
-      priority: (task?.priority || "MEDIUM") as Priority,
+      title: task?.title ?? "",
+      description: task?.description ?? "",
+      priority: task?.priority ?? Priority.MEDIUM,
       dueDate: task?.dueDate
         ? new Date(task.dueDate).toISOString().split("T")[0]
         : "",
-      categoryId: task?.category?.id || "no-category",
+      categoryId: task?.category?.id ?? undefined,
     },
   });
 

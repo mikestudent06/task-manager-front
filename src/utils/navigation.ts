@@ -3,7 +3,6 @@ import {
   CheckSquare,
   Tags,
   User,
-  Settings,
   LogOut,
 } from "lucide-react";
 import type { NavItem, UserMenuAction } from "@/types/layout.types";

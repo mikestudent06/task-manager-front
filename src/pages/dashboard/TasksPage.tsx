@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
-import { TaskForm } from "@/components/forms/TaskForm";
 import { TaskList } from "@/components/tasks/TaskList";
 import { useTasks } from "@/hooks/useTasks";
 import { useCategories } from "@/hooks/useCategories";
@@ -24,6 +23,7 @@ import {
   type CreateTaskData,
   type UpdateTaskData,
 } from "@/types/task.types";
+import { TaskForm } from "@/components/forms/TaskForm";
 
 export const TasksPage: React.FC = () => {
   const [showCreateDialog, setShowCreateDialog] = useState(false);

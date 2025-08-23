@@ -11,7 +11,6 @@ import {
   AlertCircle,
   Trophy,
   TrendingUp,
-  Tag,
 } from "lucide-react";
 
 export const DashboardPage: React.FC = () => {

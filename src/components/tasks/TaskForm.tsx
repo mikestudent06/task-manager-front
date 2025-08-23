@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { format } from "date-fns";
-import { Calendar as CalendarIcon, Clock, Flag, Tag, X } from "lucide-react";
+import { Calendar as CalendarIcon, Clock, Tag, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -397,7 +397,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
                       </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">
+                      <SelectItem value="none">
                         <div className="flex items-center gap-2">
                           <Tag className="h-3 w-3 text-muted-foreground" />
                           <span>No category</span>

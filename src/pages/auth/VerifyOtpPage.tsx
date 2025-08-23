@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-import { useSearchParams } from "react-router-dom";
 import { AuthLayout } from "@/components/layout/AuthLayout";
 import { OtpForm } from "@/components/forms/OtpForm";
 import { useAuth } from "@/hooks/useAuth";

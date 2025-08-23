@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { format, isAfter, isToday, isTomorrow, isPast } from "date-fns";
+import React, { useState, useEffect } from "react";
+import { format, isToday, isTomorrow, isPast } from "date-fns";
 import {
   MoreHorizontal,
   Edit,
   Trash2,
   Calendar,
-  Flag,
-  Tag,
   Clock,
   CheckCircle,
   Circle,
@@ -19,7 +17,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
@@ -46,7 +44,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { TaskStatus, Priority } from "@/types/task.types";
 import type {

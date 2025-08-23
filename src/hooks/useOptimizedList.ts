@@ -12,7 +12,6 @@ interface UseOptimizedListProps<T> {
 
 export const useOptimizedList = <T extends Record<string, any>>({
   items,
-  getItemId,
   searchQuery = '',
   searchFields = [],
   filterFn,
