@@ -1,13 +1,15 @@
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+// In dev, use Vite proxy (/api → backend) to avoid CORS; in prod use env URL
+const API_BASE =
+  import.meta.env.DEV ? "/api" : (import.meta.env.VITE_API_URL || "http://localhost:3000");
 
 // In-memory token storage (secure against XSS)
 let accessToken: string | null = null;
 
 // Create axios instance
 export const api = axios.create({
-  baseURL: API_URL,
+  baseURL: API_BASE,
   headers: {
     "Content-Type": "application/json",
   },
@@ -102,7 +104,16 @@ api.interceptors.response.use(
       );
     }
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    // Don't try refresh when the failed request was login or refresh itself
+    const isAuthEndpoint =
+      /\/auth\/login$/i.test(originalRequest?.url ?? "") ||
+      /\/auth\/refresh$/i.test(originalRequest?.url ?? "");
+
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !isAuthEndpoint
+    ) {
       originalRequest._retry = true;
 
       try {
@@ -111,7 +122,7 @@ api.interceptors.response.use(
         }
 
         const response = await axios.post(
-          `${API_URL}/auth/refresh`,
+          `${API_BASE}/auth/refresh`,
           {},
           {
             withCredentials: true,
