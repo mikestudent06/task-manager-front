@@ -1,0 +1,105 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "loadingApp": "Chargement de l'application..."
+  },
+  "auth": {
+    "login": {
+      "title": "Bon retour",
+      "description": "Connectez-vous à votre compte pour continuer",
+      "email": "E-mail",
+      "emailPlaceholder": "Entrez votre e-mail",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "Entrez votre mot de passe",
+      "submit": "Se connecter",
+      "submitting": "Connexion...",
+      "forgotPassword": "Mot de passe oublié ?",
+      "noAccount": "Pas encore de compte ?",
+      "signUp": "S'inscrire"
+    },
+    "register": {
+      "title": "Créer un compte",
+      "description": "Inscrivez-vous pour commencer",
+      "fullName": "Nom complet",
+      "fullNamePlaceholder": "Entrez votre nom complet",
+      "email": "E-mail",
+      "emailPlaceholder": "Entrez votre e-mail",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "Choisissez un mot de passe",
+      "submit": "Créer un compte",
+      "submitting": "Création du compte...",
+      "hasAccount": "Déjà un compte ?",
+      "signIn": "Se connecter"
+    },
+    "verifyOtp": {
+      "title": "Vérifiez votre compte",
+      "description": "Entrez le code de vérification envoyé à votre e-mail",
+      "sentTo": "Un code à 6 chiffres a été envoyé à",
+      "enterCode": "Code de vérification",
+      "verify": "Vérifier",
+      "verifying": "Vérification...",
+      "noCode": "Vous n'avez pas reçu le code ?",
+      "resendIn": "Renvoyer dans {{count}}s",
+      "resend": "Renvoyer le code"
+    },
+    "forgotPassword": {
+      "title": "Mot de passe oublié",
+      "description": "Nous vous enverrons un lien pour réinitialiser votre mot de passe",
+      "instructions": "Entrez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.",
+      "email": "E-mail",
+      "emailPlaceholder": "Entrez votre e-mail",
+      "submit": "Envoyer le lien",
+      "submitting": "Envoi...",
+      "rememberPassword": "Vous vous souvenez de votre mot de passe ?",
+      "signIn": "Se connecter"
+    },
+    "resetPassword": {
+      "title": "Réinitialiser le mot de passe",
+      "description": "Entrez votre nouveau mot de passe",
+      "instructions": "Entrez votre nouveau mot de passe ci-dessous.",
+      "newPassword": "Nouveau mot de passe",
+      "newPasswordPlaceholder": "Entrez le nouveau mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "confirmPlaceholder": "Confirmez le nouveau mot de passe",
+      "submit": "Réinitialiser",
+      "submitting": "Réinitialisation..."
+    },
+    "errors": {
+      "invalidEmail": "Adresse e-mail invalide",
+      "passwordRequired": "Le mot de passe est requis",
+      "passwordMin": "Le mot de passe doit contenir au moins 8 caractères",
+      "nameMin": "Le nom doit contenir au moins 2 caractères",
+      "passwordsDontMatch": "Les mots de passe ne correspondent pas"
+    },
+    "toast": {
+      "loginFailed": "Échec de la connexion",
+      "registerFailed": "Échec de l'inscription",
+      "otpFailed": "Échec de la vérification du code",
+      "resendFailed": "Échec du renvoi du code",
+      "resetEmailFailed": "Échec de l'envoi de l'e-mail de réinitialisation",
+      "resetPasswordFailed": "Échec de la réinitialisation du mot de passe",
+      "logoutSuccess": "Déconnexion réussie"
+    }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Bonjour, {{name}} !",
+      "afternoon": "Bon après-midi, {{name}} !",
+      "evening": "Bonsoir, {{name}} !",
+      "fallback": "vous"
+    },
+    "title": "Bon retour",
+    "description": "Voici ce qui se passe avec vos tâches aujourd'hui.",
+    "nav": {
+      "dashboard": "Tableau de bord",
+      "tasks": "Tâches",
+      "categories": "Catégories",
+      "profile": "Profil",
+      "logout": "Déconnexion"
+    },
+    "loading": {
+      "title": "Chargement de votre vue d'ensemble des tâches...",
+      "description": "Nous chargons votre vue d'ensemble des tâches. Veuillez patienter un moment."
+    }
+  }
+}

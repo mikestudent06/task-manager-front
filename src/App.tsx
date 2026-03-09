@@ -66,7 +66,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Suspense fallback={<PageLoading message="Loading application..." />}>
+      <Suspense fallback={<PageLoading messageKey="common.loadingApp" />}>
         <Routes>
           {/* Public Auth Routes */}
           <Route path="/auth/login" element={<LoginPage />} />

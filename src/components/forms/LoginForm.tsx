@@ -5,16 +5,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import type { LoginCredentials } from "@/types/auth.types";
-
-const loginSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(1, "Password is required"),
-});
 
 interface LoginFormProps {
   onSubmit: (data: LoginCredentials) => void;
@@ -25,6 +21,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   onSubmit,
   isLoading = false,
 }) => {
+  const { t } = useTranslation();
+  const loginSchema = z.object({
+    email: z.string().email(t("auth.errors.invalidEmail")),
+    password: z.string().min(1, t("auth.errors.passwordRequired")),
+  });
   const {
     register,
     handleSubmit,
@@ -36,11 +37,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">{t("auth.login.email")}</Label>
         <Input
           id="email"
           type="email"
-          placeholder="Enter your email"
+          placeholder={t("auth.login.emailPlaceholder")}
           {...register("email")}
           className={errors.email ? "border-destructive" : ""}
         />
@@ -50,11 +51,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password">{t("auth.login.password")}</Label>
         <Input
           id="password"
           type="password"
-          placeholder="Enter your password"
+          placeholder={t("auth.login.passwordPlaceholder")}
           {...register("password")}
           className={errors.password ? "border-destructive" : ""}
         />
@@ -64,29 +65,20 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       </div>
 
       <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading ? "Signing in..." : "Sign In"}
+        {isLoading ? t("auth.login.submitting") : t("auth.login.submit")}
       </Button>
-
-      {/* <div className="text-center">
-        <Link
-          to="/auth/forgot-password"
-          className="text-sm text-primary hover:underline"
-        >
-          Forgot your password?
-        </Link>
-      </div> */}
 
       <Separator />
 
       <div className="text-center">
         <span className="text-sm text-muted-foreground">
-          Don't have an account?{" "}
+          {t("auth.login.noAccount")}{" "}
         </span>
         <Link
           to="/auth/register"
           className="text-sm text-primary hover:underline font-medium"
         >
-          Sign up
+          {t("auth.login.signUp")}
         </Link>
       </div>
     </form>

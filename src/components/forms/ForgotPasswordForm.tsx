@@ -5,15 +5,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import type { ForgotPasswordData } from "@/types/auth.types";
-
-const forgotPasswordSchema = z.object({
-  email: z.string().email("Invalid email address"),
-});
 
 interface ForgotPasswordFormProps {
   onSubmit: (data: ForgotPasswordData) => void;
@@ -24,6 +21,10 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
   onSubmit,
   isLoading = false,
 }) => {
+  const { t } = useTranslation();
+  const forgotPasswordSchema = z.object({
+    email: z.string().email(t("auth.errors.invalidEmail")),
+  });
   const {
     register,
     handleSubmit,
@@ -36,17 +37,16 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="text-center mb-4">
         <p className="text-sm text-muted-foreground">
-          Enter your email address and we'll send you a link to reset your
-          password.
+          {t("auth.forgotPassword.instructions")}
         </p>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">{t("auth.forgotPassword.email")}</Label>
         <Input
           id="email"
           type="email"
-          placeholder="Enter your email"
+          placeholder={t("auth.forgotPassword.emailPlaceholder")}
           {...register("email")}
           className={errors.email ? "border-destructive" : ""}
         />
@@ -56,20 +56,20 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
       </div>
 
       <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading ? "Sending..." : "Send Reset Link"}
+        {isLoading ? t("auth.forgotPassword.submitting") : t("auth.forgotPassword.submit")}
       </Button>
 
       <Separator />
 
       <div className="text-center">
         <span className="text-sm text-muted-foreground">
-          Remember your password?{" "}
+          {t("auth.forgotPassword.rememberPassword")}{" "}
         </span>
         <Link
           to="/auth/login"
           className="text-sm text-primary hover:underline font-medium"
         >
-          Sign in
+          {t("auth.forgotPassword.signIn")}
         </Link>
       </div>
     </form>

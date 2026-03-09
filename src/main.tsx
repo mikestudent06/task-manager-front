@@ -5,6 +5,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { BrowserRouter } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { queryClient } from "./lib/queryClient.ts";
+import "./i18n";
 import "./index.css";
 import App from "./App.tsx";
 

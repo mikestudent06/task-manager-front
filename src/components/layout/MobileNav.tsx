@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
@@ -14,6 +15,7 @@ interface MobileNavProps {
 }
 
 export const MobileNav: React.FC<MobileNavProps> = ({ isOpen, onClose }) => {
+  const { t } = useTranslation();
   const { user } = useAuth();
 
   if (!user) return null;
@@ -85,7 +87,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ isOpen, onClose }) => {
                 }
               >
                 <item.icon className="h-4 w-4" />
-                {item.title}
+                {t(item.title)}
                 {item.badge && (
                   <span className="ml-auto bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full">
                     {item.badge}

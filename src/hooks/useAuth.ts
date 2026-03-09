@@ -1,11 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { authService } from "@/services/auth.service";
 import { tokenManager } from "@/lib/axios";
 import toast from "react-hot-toast";
 import { useAuthStore } from "@/stores/authStore";
 
 export const useAuth = () => {
+  const { t } = useTranslation();
   const { setReceivedResetPwdLink } = useAuthStore();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -37,7 +39,7 @@ export const useAuth = () => {
       navigate("/dashboard");
     },
     onError: (error: any) => {
-      toast.error(error.response?.data?.message || "Login failed");
+      toast.error(error.response?.data?.message || t("auth.toast.loginFailed"));
     },
   });
 
@@ -49,7 +51,7 @@ export const useAuth = () => {
       navigate("/auth/verify-otp");
     },
     onError: (error: any) => {
-      toast.error(error.response?.data?.message || "Registration failed");
+      toast.error(error.response?.data?.message || t("auth.toast.registerFailed"));
     },
   });
 
@@ -67,7 +69,7 @@ export const useAuth = () => {
       navigate("/dashboard");
     },
     onError: (error: any) => {
-      toast.error(error.response?.data?.message || "OTP verification failed");
+      toast.error(error.response?.data?.message || t("auth.toast.otpFailed"));
     },
   });
 
@@ -78,7 +80,7 @@ export const useAuth = () => {
       toast.success(data.message || "OTP sent successfully");
     },
     onError: (error: any) => {
-      toast.error(error.response?.data?.message || "Failed to resend OTP");
+      toast.error(error.response?.data?.message || t("auth.toast.resendFailed"));
     },
   });
 
@@ -91,7 +93,7 @@ export const useAuth = () => {
     },
     onError: (error: any) => {
       toast.error(
-        error.response?.data?.message || "Failed to send reset email"
+        error.response?.data?.message || t("auth.toast.resetEmailFailed")
       );
     },
   });
@@ -104,7 +106,7 @@ export const useAuth = () => {
       navigate("/auth/login");
     },
     onError: (error: any) => {
-      toast.error(error.response?.data?.message || "Failed to reset password");
+      toast.error(error.response?.data?.message || t("auth.toast.resetPasswordFailed"));
     },
   });
 
@@ -120,7 +122,7 @@ export const useAuth = () => {
       queryClient.clear(); // Clear all React Query cache
       localStorage.clear();
       navigate("/auth/login");
-      toast.success("Logged out successfully");
+      toast.success(t("auth.toast.logoutSuccess"));
     }
   };
 

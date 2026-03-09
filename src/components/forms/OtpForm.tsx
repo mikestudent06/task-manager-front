@@ -2,6 +2,7 @@
 
 import type React from "react";
 import { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,6 +20,7 @@ export const OtpForm: React.FC<OtpFormProps> = ({
   isLoading = false,
   email,
 }) => {
+  const { t } = useTranslation();
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [resendTimer, setResendTimer] = useState(60);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -37,7 +39,6 @@ export const OtpForm: React.FC<OtpFormProps> = ({
     newOtp[index] = value;
     setOtp(newOtp);
 
-    // Auto-focus next input
     if (value && index < 5) {
       inputRefs.current[index + 1]?.focus();
     }
@@ -66,13 +67,13 @@ export const OtpForm: React.FC<OtpFormProps> = ({
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="text-center">
         <p className="text-sm text-muted-foreground">
-          We've sent a 6-digit code to
+          {t("auth.verifyOtp.sentTo")}
         </p>
         <p className="font-medium">{email}</p>
       </div>
 
       <div className="space-y-2">
-        <Label>Enter verification code</Label>
+        <Label>{t("auth.verifyOtp.enterCode")}</Label>
         <div className="flex gap-2 justify-center">
           {otp.map((digit, index) => (
             <Input
@@ -97,12 +98,12 @@ export const OtpForm: React.FC<OtpFormProps> = ({
         className="w-full"
         disabled={isLoading || otp.join("").length !== 6}
       >
-        {isLoading ? "Verifying..." : "Verify Code"}
+        {isLoading ? t("auth.verifyOtp.verifying") : t("auth.verifyOtp.verify")}
       </Button>
 
       <div className="text-center">
         <p className="text-sm text-muted-foreground mb-2">
-          Didn't receive the code?
+          {t("auth.verifyOtp.noCode")}
         </p>
         <Button
           type="button"
@@ -111,7 +112,9 @@ export const OtpForm: React.FC<OtpFormProps> = ({
           disabled={resendTimer > 0}
           className="text-primary"
         >
-          {resendTimer > 0 ? `Resend in ${resendTimer}s` : "Resend Code"}
+          {resendTimer > 0
+            ? t("auth.verifyOtp.resendIn", { count: resendTimer })
+            : t("auth.verifyOtp.resend")}
         </Button>
       </div>
     </form>

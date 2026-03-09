@@ -1,0 +1,105 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "loadingApp": "Loading application..."
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome Back",
+      "description": "Sign in to your account to continue",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "submit": "Sign In",
+      "submitting": "Signing in...",
+      "forgotPassword": "Forgot your password?",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up"
+    },
+    "register": {
+      "title": "Create Account",
+      "description": "Sign up to get started",
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "Enter your full name",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "password": "Password",
+      "passwordPlaceholder": "Create a password",
+      "submit": "Create Account",
+      "submitting": "Creating account...",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign in"
+    },
+    "verifyOtp": {
+      "title": "Verify Your Account",
+      "description": "Enter the verification code sent to your email",
+      "sentTo": "We've sent a 6-digit code to",
+      "enterCode": "Enter verification code",
+      "verify": "Verify Code",
+      "verifying": "Verifying...",
+      "noCode": "Didn't receive the code?",
+      "resendIn": "Resend in {{count}}s",
+      "resend": "Resend Code"
+    },
+    "forgotPassword": {
+      "title": "Forgot Password",
+      "description": "We'll send you a link to reset your password",
+      "instructions": "Enter your email address and we'll send you a link to reset your password.",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "submit": "Send Reset Link",
+      "submitting": "Sending...",
+      "rememberPassword": "Remember your password?",
+      "signIn": "Sign in"
+    },
+    "resetPassword": {
+      "title": "Reset Password",
+      "description": "Enter your new password",
+      "instructions": "Enter your new password below.",
+      "newPassword": "New Password",
+      "newPasswordPlaceholder": "Enter new password",
+      "confirmPassword": "Confirm Password",
+      "confirmPlaceholder": "Confirm new password",
+      "submit": "Reset Password",
+      "submitting": "Resetting..."
+    },
+    "errors": {
+      "invalidEmail": "Invalid email address",
+      "passwordRequired": "Password is required",
+      "passwordMin": "Password must be at least 8 characters",
+      "nameMin": "Name must be at least 2 characters",
+      "passwordsDontMatch": "Passwords don't match"
+    },
+    "toast": {
+      "loginFailed": "Login failed",
+      "registerFailed": "Registration failed",
+      "otpFailed": "OTP verification failed",
+      "resendFailed": "Failed to resend OTP",
+      "resetEmailFailed": "Failed to send reset email",
+      "resetPasswordFailed": "Failed to reset password",
+      "logoutSuccess": "Logged out successfully"
+    }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Good morning, {{name}}!",
+      "afternoon": "Good afternoon, {{name}}!",
+      "evening": "Good evening, {{name}}!",
+      "fallback": "there"
+    },
+    "title": "Welcome back",
+    "description": "Here's what's happening with your tasks today.",
+    "nav": {
+      "dashboard": "Dashboard",
+      "tasks": "Tasks",
+      "categories": "Categories",
+      "profile": "Profile",
+      "logout": "Logout"
+    },
+    "loading": {
+      "title": "Loading your task overview...",
+      "description": "We're loading your task overview. Please wait a moment."
+    }
+  }
+}

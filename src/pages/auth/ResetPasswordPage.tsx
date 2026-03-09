@@ -2,14 +2,14 @@
 
 import type React from "react";
 import { useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { AuthLayout } from "@/components/layout/AuthLayout";
 import { ResetPasswordForm } from "@/components/forms/ResetPasswordForm";
 import { useAuth } from "@/hooks/useAuth";
 
 export const ResetPasswordPage: React.FC = () => {
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
-
-  console.log("searchParams", searchParams);
   const resetToken = searchParams.get("token") || "";
   const { resetPassword, isResetPasswordLoading } = useAuth();
 
@@ -19,8 +19,8 @@ export const ResetPasswordPage: React.FC = () => {
 
   return (
     <AuthLayout
-      title="Set New Password"
-      description="Enter your new password below"
+      title={t("auth.resetPassword.title")}
+      description={t("auth.resetPassword.description")}
     >
       <ResetPasswordForm
         onSubmit={handleResetPassword}

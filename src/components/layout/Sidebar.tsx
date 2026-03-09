@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { dashboardNavItems } from "@/utils/navigation";
@@ -11,6 +12,7 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
+  const { t } = useTranslation();
   const { user } = useAuth();
 
   if (!user) return null;
@@ -62,7 +64,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
                 }
               >
                 <item.icon className="h-4 w-4" />
-                {item.title}
+                {t(item.title)}
                 {item.badge && (
                   <span className="ml-auto bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full">
                     {item.badge}

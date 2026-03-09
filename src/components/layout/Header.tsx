@@ -1,5 +1,6 @@
 import React from "react";
-import { Menu } from "lucide-react";
+import { Menu, Globe } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -14,17 +15,24 @@ import { useAuth } from "@/hooks/useAuth";
 import { getUserMenuActions } from "@/utils/navigation";
 import { useNavigate } from "react-router-dom";
 
+const localeByLang: Record<string, string> = {
+  en: "en-US",
+  fr: "fr-FR",
+};
+
 interface HeaderProps {
   onMenuClick: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
+  const { t, i18n } = useTranslation();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   if (!user) return null;
 
   const userMenuActions = getUserMenuActions(logout);
+  const dateLocale = localeByLang[i18n.language] ?? "en-US";
 
   const handleMenuItemClick = (action: any) => {
     if (action.onClick) {
@@ -51,10 +59,12 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
           <div className="flex h-full items-center">
             <div className="max-w-[240px] sm:max-w-none">
               <h1 className="text-lg md:text-xl font-semibold truncate">
-                Good {getGreeting()}, {user?.name?.split(" ")[0] || "there"}!
+                {t(getGreetingKey(), {
+                  name: user?.name?.split(" ")[0] || t("dashboard.greeting.fallback"),
+                })}
               </h1>
               <p className="text-xs md:text-sm text-muted-foreground truncate">
-                {new Date().toLocaleDateString("en-US", {
+                {new Date().toLocaleDateString(dateLocale, {
                   weekday: "long",
                   year: "numeric",
                   month: "long",
@@ -65,7 +75,24 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
           </div>
         </div>
 
-        <div className="flex items-center">
+        <div className="flex items-center gap-1">
+          {/* Language switcher */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <Globe className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => i18n.changeLanguage("en")}>
+                English
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => i18n.changeLanguage("fr")}>
+                Français
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          {/* User dropdown menu */}
           {/* User dropdown menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -97,7 +124,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
                   }
                 >
                   <action.icon className="mr-2 h-4 w-4" />
-                  <span>{action.label}</span>
+                  <span>{t(action.label)}</span>
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
@@ -108,9 +135,9 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
   );
 };
 
-function getGreeting(): string {
+function getGreetingKey(): string {
   const hour = new Date().getHours();
-  if (hour < 12) return "morning";
-  if (hour < 17) return "afternoon";
-  return "evening";
+  if (hour < 12) return "dashboard.greeting.morning";
+  if (hour < 17) return "dashboard.greeting.afternoon";
+  return "dashboard.greeting.evening";
 }

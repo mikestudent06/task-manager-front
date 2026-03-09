@@ -12,8 +12,10 @@ import {
   Trophy,
   TrendingUp,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const DashboardPage: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { tasks, taskStats, isTasksLoading, isStatsLoading } = useTasks({
     limit: 4, // Get recent 4 tasks for the recent tasks section
@@ -28,8 +30,10 @@ export const DashboardPage: React.FC = () => {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold">Welcome back, {user.name}!</h1>
-          <p className="text-muted-foreground">Loading your task overview...</p>
+          <h1 className="text-3xl font-bold">{t("dashboard.title")}</h1>
+          <p className="text-muted-foreground">
+            {t("dashboard.loading.description")}
+          </p>
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {[...Array(4)].map((_, i) => (
@@ -160,9 +164,9 @@ export const DashboardPage: React.FC = () => {
     <div className="space-y-6 p-6">
       {/* Welcome section */}
       <div>
-        <h1 className="text-3xl font-bold">Welcome back, {user.name}!</h1>
+        <h1 className="text-3xl font-bold">{t("dashboard.title")}, {user.name}!</h1>
         <p className="text-muted-foreground">
-          Here's what's happening with your tasks today.
+          {t("dashboard.description")}
         </p>
       </div>
 
@@ -212,7 +216,7 @@ export const DashboardPage: React.FC = () => {
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <span
                           className={`px-2 py-0.5 rounded text-xs font-medium ${getPriorityStyle(
-                            task.priority
+                            task.priority,
                           )}`}
                         >
                           {formatPriority(task.priority)}
@@ -231,7 +235,7 @@ export const DashboardPage: React.FC = () => {
                     </div>
                     <span
                       className={`px-2 py-1 rounded-full text-xs font-medium ml-2 ${getStatusStyle(
-                        task.status
+                        task.status,
                       )}`}
                     >
                       {formatStatus(task.status)}
@@ -355,10 +359,10 @@ export const DashboardPage: React.FC = () => {
                   {completionPercentage >= 80
                     ? "Excellent work! You're crushing your tasks! 🎉"
                     : completionPercentage >= 50
-                    ? "Great progress! Keep up the momentum! 💪"
-                    : taskStats?.totalTasks === 0
-                    ? "Ready to start? Create your first task!"
-                    : "You've got this! Stay focused on your goals! 🚀"}
+                      ? "Great progress! Keep up the momentum! 💪"
+                      : taskStats?.totalTasks === 0
+                        ? "Ready to start? Create your first task!"
+                        : "You've got this! Stay focused on your goals! 🚀"}
                 </p>
               </div>
             </div>
